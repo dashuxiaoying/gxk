@@ -13,6 +13,7 @@ import (
 	"os"
 	"io"
 	"strings"
+	"strconv"
 )
 
 const (
@@ -294,9 +295,8 @@ func run() bool {
 		log.Println("########选修成功########", ab)
 	}
 	//再次查询获取最新课程表
-	time.Sleep(5 * time.Second)
-	iresp, err = reqcc.Get(infoUrl + "?t=" + time.Now().String())
-	itxts,_:=iresp.Content()
+	irespp, err := reqcc.Get(infoUrl + "?t=" + strconv.FormatInt(time.Now().Unix(), 10))
+	itxts, _ := irespp.Content()
 	studyInfos := N{}
 	json.Unmarshal(itxts, &studyInfos)
 	lists := studyInfos.Attribute.List
