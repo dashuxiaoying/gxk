@@ -199,6 +199,10 @@ func main() {
 		return
 	}
 
+	defer func() {
+		log.Println("idcode:" + idcode)
+	}()
+
 	wg = &sync.WaitGroup{}
 	ok := run()
 	wg.Wait()
@@ -292,8 +296,9 @@ func run() bool {
 	//再次查询获取最新课程表
 	time.Sleep(5 * time.Second)
 	iresp, err = reqcc.Get(infoUrl + "?t=" + time.Now().String())
+	itxts,_:=iresp.Content()
 	studyInfos := N{}
-	json.Unmarshal([]byte(itxt), &studyInfos)
+	json.Unmarshal(itxts, &studyInfos)
 	lists := studyInfos.Attribute.List
 
 	for x := 0; x < len(lists); x++ {
