@@ -200,9 +200,13 @@ func main() {
 	}
 
 	wg = &sync.WaitGroup{}
-	run()
+	ok := run()
 	wg.Wait()
 	log.Println("################all learn finish###################")
+
+	if ok == false {
+		return
+	}
 
 	//考试
 	log.Println("#################start exam###############")
@@ -243,17 +247,17 @@ func main() {
 
 }
 
-func run() {
+func run() bool {
 	//课程学习
 	iresp, err := reqcc.Get(infoUrl)
 	if err != nil {
 		log.Println("##########获取课程信息失败###########")
-		return
+		return false
 	}
 	itxt, err := iresp.Text()
 	if err != nil {
 		log.Println("##########获取课程信息失败###########")
-		return
+		return false
 	}
 
 	myClassId := ""
@@ -263,11 +267,18 @@ func run() {
 	list := studyInfo.Attribute.List
 	if len(list) == 0 {
 		log.Println("#######没有选择任何课程#########")
-		return
+		return false
 	}
-	if list[0]["classId"].(string) != mainclassId {
+	buy := false
+	for aa := 0; aa < len(list); aa++ {
+		if list[aa]["classId"].(string) == mainclassId {
+			buy = true
+			break
+		}
+	}
+	if buy == false {
 		log.Println("#######必修课未选，请先交费#########")
-		return
+		return false
 	}
 	if len(list) == 1 {
 		log.Println("########选修课未选择，尝试选课#######")
@@ -279,14 +290,16 @@ func run() {
 		log.Println("########选修成功########", ab)
 	}
 	//再次查询获取最新课程表
-	iresp, err = reqcc.Get(infoUrl)
-	studyInfo = N{}
-	json.Unmarshal([]byte(itxt), &studyInfo)
-	list = studyInfo.Attribute.List
+	time.Sleep(5 * time.Second)
+	iresp, err = reqcc.Get(infoUrl + "?t=" + time.Now().String())
+	studyInfos := N{}
+	json.Unmarshal([]byte(itxt), &studyInfos)
+	lists := studyInfos.Attribute.List
 
-	for x := 0; x < len(list); x++ {
-		myClassId = list[x]["myClassId"].(string)
-		status := list[x]["status"].(float64)
+	for x := 0; x < len(lists); x++ {
+		myClassId = lists[x]["myClassId"].(string)
+		log.Println(myClassId)
+		status := lists[x]["status"].(float64)
 		if status == float64(2) {
 			log.Println(myClassId, "课程已经学完")
 			continue
@@ -295,12 +308,12 @@ func run() {
 		cresp, err := reqcc.Get(classUrl + myClassId)
 		if err != nil {
 			log.Println("##########获取班级信息失败###########")
-			return
+			return false
 		}
 		ctxt, err := cresp.Text()
 		if err != nil {
 			log.Println("##########获取班级信息失败###########")
-			return
+			return false
 		}
 
 		cc := M{}
@@ -335,6 +348,7 @@ func run() {
 			}
 		}
 	}
+	return true
 }
 
 func worker(u *url.URL, myClassId, myClassCourseId, myClassCourseVideoId string, wg *sync.WaitGroup) {
