@@ -1,0 +1,528 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title></title>
+
+    <script>
+        //fix IE window.console
+        window.console = window.console || {
+            log: function () {
+            }, error: function () {
+            }
+        };
+        try {
+            window._global_server_data = {
+                "cmsAccountInfo": {
+                    "accountId": "e38404f7-fd05-4f1e-a5ab-e263ac3171db",
+                    "unitName": "郑州市儿童医院",
+                    "cardNum": "41010519661026841X",
+                    "mobile": null,
+                    "realName": "翟波",
+                    "sex": 0,
+                    "imagePath": null,
+                    "regionId": "410101",
+                    "regionPath": "410000,410100,410101",
+                    "roleRP": {
+                        "roleId": "10000",
+                        "roleName": "内置学员角色",
+                        "roleMemo": "创建测试角色3",
+                        "menu": [],
+                        "regionRPS": []
+                    },
+                    "isOneLogin": 0
+                },
+                "manageAccountInfo": null,
+                "config": {
+                    "loginMode": 2,
+                    "registerMode": 0,
+                    "registerUrl": null,
+                    "isLoginVcode": 1,
+                    "isSendRegisterCode": 0,
+                    "polyvUserId": "a18dce4e43",
+                    "polyvSecretKey": "9oeyfSRsxo",
+                    "polyvWriteToken": null,
+                    "polyvReadToken": "Z0O1rjs1EQ-kT61k90dh0-89uorw421b",
+                    "theme": "default",
+                    "title": "河南专技在线",
+                    "isShowGuide": 0,
+                    "cmsLogo": "static/image/474db8e7-e012-45c6-bbb9-6a162db8890f.png",
+                    "manageLogo": "static/image/20180315/c06bdd46-7e71-49f4-a076-e41d25545680.png",
+                    "manageLoginLogo": "static/image/20180315/cc6f149d-38ee-447a-b2d8-515fcd0a596c.png",
+                    "isOpenClassYear": 1,
+                    "isOpenClassAttribute": 1,
+                    "footHtml": "\t<p>Copyright © 2018 GaoHui. All Rights Reserved.</p>\r\n\t\t\t<p>河南高辉教育软件科技有限公司 版权所有. 豫ICP备140045678号-1\r\n\t\t\t</p>",
+                    "loginOutUrl": "http://hnzj.ghlearning.com"
+                },
+                "projectTitle": "河南专技在线",
+                "theme": "default"
+            }
+            if (!window._global_server_data) {
+                window._global_server_data = {};
+            }
+        } catch (ex) {
+            window._global_server_data = {}
+        }
+    </script>
+
+
+    <link href="static/css/_library-styles.css?20e0ee26f75740b01013" rel="stylesheet">
+
+    <link href="static/css/record-styles.css?20e0ee26f75740b01013" rel="stylesheet">
+
+
+</head>
+
+<body style=""><!--用于 100% 宽度，占据全部视口（viewport）的容器-->
+<div class="container-fluid  " style="padding:0px;margin-bottom:0px;" id="ADF07927_51B4_23A0_5D10_E35658A6932B">
+    <!--响应式菜单栏-->
+    <nav class="navbar navbar-default navbar-static-top header-index">
+
+        <div class="container">
+            <!-- 商标以及手机端的收缩下拉按扭 -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#_nav_header">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!--文字商标-->
+                <!--<a class="navbar-brand" href="#">Brand</a>-->
+                <!--图片商标-->
+                <a class="navbar-brand" href="/index">
+                    <img class="login-img" img-tag="logo" style="display: block;" alt="Brand"
+                         src="static/image/474db8e7-e012-45c6-bbb9-6a162db8890f.png">
+                </a>
+            </div>
+
+            <!-- 收缩块（一级链接、二级链接、表单、静态文本）-->
+            <div class="collapse navbar-collapse" id="_nav_header">
+                <!--未登录界面-->
+                <div div-tag="unlogin" class="" style="display:none">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="header-index-li">
+                            <a href="/register">注册</a>
+                        </li>
+                        <li class="header-index-li">
+                            <a href="javascript:void(0)" a-tag="login">登录</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--登录界面-->
+                <div div-tag="login" style="display: block;">
+                    <!--链接-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="apply-entrance-t">
+                            <a href="/index" class="apply-t">首页</a>
+                        </li>
+                        <!--一级链接-->
+                        <li class="dropdown apply-entrance">
+                            <!--二级链接-->
+                            <a href="#" class="dropdown-toggle apply-tt" data-toggle="dropdown" intro-tag="guide6"
+                               data-position="bottom">我的学习<span class="caret"></span></a>
+                            <ul class="dropdown-menu apply-link-list">
+                                <li>
+                                    <a href="/my/learning">学习中心</a>
+                                </li>
+                                <li>
+                                    <a id="header_exam" href="/my/exam">考试</a>
+                                </li>
+                                <li>
+                                    <a id="header_order" href="/order/list">订单</a>
+                                </li>
+                                <!--<li role="separator" class="divider"></li>-->
+                                <li>
+                                    <a href="/my/record">学习档案</a>
+                                </li>
+                                <!--<li role="separator" class="divider"></li>-->
+                                <li>
+                                    <a href="/my/index">个人信息</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" a-tag="logout">退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--<li class="apply-entrance-t">-->
+                        <!--<a href="/message/index" class="apply-t">消息<span class="badge" span-tag="messageCount"></span></a>-->
+                        <!--</li>-->
+                        <!--<li class="apply-entrance-t">-->
+                        <!--<a href="#" class="apply-t">帮助中心</a>-->
+                        <!--</li>-->
+                    </ul>
+
+                    <!--搜索表单-->
+                    <!--<form class="header-index-search ml90 mt15">-->
+                    <!--<div class="input-group mod-search border-all">-->
+                    <!--<input type="text" class="mod-search_input" placeholder="请输入您搜索的内容" input-tag="search">-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<button class="btn btn-primary mod-search_btn-search posi-a" type="button" button-tag="search">-->
+                    <!--<span class="glyphicon glyphicon-search"></span>-->
+                    <!--</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
+                    <!--</form>-->
+                </div>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+</div><!--用于固定宽度并支持响应式布局的容器-->
+<div class="container " id="96E007BF_36B1_0EA4_ADA8_EE63A2B09FB8" style="margin-bottom:0px;">
+    <ol class="breadcrumb breadcrumb_v">
+        <li class=""><a href="/index" class="text-f80 ">首页</a></li>
+        <li class=""><a href="/my/record" class="text-f80 ">档案</a></li>
+    </ol>
+</div>
+<div style="clear: both;"></div><!--用于固定宽度并支持响应式布局的容器-->
+<div class="container " id="06F9F002_A2F3_7753_CE7A_29DA69A15E14" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-sm-2 personal-center-left">
+            <ul class="cursor-p border-all">
+                <li li-onclick="set" class="f16 info p15 border-b set-ff">
+                    <a href="../my/index" class="set-ff">
+                        <img du-src="imgUrl" alt="" class="img-circle left mr15" style="width: 52px;height: 52px;">
+                        <div class="f16 text-f333 set-ff mb10" du-html="name">{{ .uname}}</div>
+                        <div class="f14 text-f999 set-ff">资料设置</div>
+                        <div class="clearfix set-ff"></div>
+                    </a>
+                </li>
+                <li du-show="showStudy" li-onclick="study" class="f16 height60 lh60 text-f80" style=""><a
+                        href="../my/learning"><i class="icon-img icon-3 icon-3-1"></i>学习</a></li>
+                <li du-show="showExam" li-onclick="exam" class="f16 height60 lh60 text-f80" style=""><a
+                        href="../my/exam"><i class="icon-img icon-3 icon-3-2"></i>考试</a></li>
+                <li du-show="showExercise" li-onclick="exercise" class="f16 height60 lh60 text-f80" style=""><a
+                        href="../my/practice"><i class="icon-img icon-3 icon-3-3"></i>练习</a></li>
+                <li du-show="showRecord" li-onclick="record" class="f16 height60 lh60 text-f80 active" style=""><a
+                        href="../my/record"><i class="icon-img icon-3 icon-3-4"></i>档案</a></li>
+                <li du-show="showOrder" li-onclick="order" class="f16 height60 lh60 text-f80" style=""><a
+                        href="../order/list"><i class="icon-img icon-3 icon-3-5"></i>订单</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-10 personal-center-right">
+            <div class="border-all p20">
+                <div class="f16 text-blue ls5 font-w7 mb30"><i class="icon-img icon-5 icon-5-1"
+                                                               style="background-position-x: -164px;"></i><span>档案</span>
+                </div>
+                <div class="personal-center-tab" du-render="tab"><!--用于 100% 宽度，占据全部视口（viewport）的容器-->
+                    <div class="container-fluid  " style="padding:0px;margin-bottom:0px;"
+                         id="D4887D65_57D3_D633_FD3B_F3E01C31942A"><!--数据数据-表格展示-->
+                        <!--此处删除了table-responsive-->
+                        <div class="" id="F8C6C30F_8FF0_577C_255F_B029BF480B79">
+                            <table class="table table-hover table-center table-bordered-head table-bordered">
+                                <thead>
+                                <tr>
+                                    <th style="">年度</th>
+                                    <th style="">必修学时</th>
+                                    <th style="">选修学时</th>
+                                    <th style="">总学时</th>
+                                    <th style="">状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td style=";text-align:center;padding:0px;"><p>2018</p></td>
+                                    <td style=";text-align:center;padding:0px;"><p>24&nbsp;/&nbsp;24</p></td>
+                                    <td style=";text-align:center;padding:0px;"><p>6&nbsp;/&nbsp;6</p></td>
+                                    <td style=";text-align:center;padding:0px;"><p>30&nbsp;/&nbsp;30</p></td>
+                                    <td style=";text-align:center">通过</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div><!--用于 100% 宽度，占据全部视口（viewport）的容器-->
+                    <div class="container-fluid  " style="padding:0px;margin-bottom:0px;"
+                         id="FF1F0860_AAFE_941D_483C_98D9FFB9A9BD"><!--分页组件模板-->
+                        <nav aria-label="Page navigation" id="ADBE01F9_5646_6F7E_8DD4_A33B2A63D5EF"
+                             style="text-align: center;">
+                            <ul class="pagination">
+                                <!--第1/3页 总共26条-->
+                                <li><span class="pagination-page-info">第1/1页 总共1条</span></li>
+                            </ul>
+                            <ul class="pagination" ul-tag="page">
+                                <li li-tag="first" class="disabled">
+                                    <a href="javascript:void(0)">首页</a>
+                                </li>
+                                <li li-tag="prev" class="disabled">
+                                    <a href="javascript:void(0)">上一页</a>
+                                </li>
+
+                                <li li-tag="1" class="active">
+                                    <a href="javascript:void(0)">1</a>
+                                </li>
+                                <li li-tag="2" class="hidden">
+                                    <a href="javascript:void(0)">2</a>
+                                </li>
+                                <li li-tag="3" class="hidden">
+                                    <a href="javascript:void(0)">3</a>
+                                </li>
+                                <li li-tag="4" class="hidden">
+                                    <a href="javascript:void(0)">4</a>
+                                </li>
+                                <li li-tag="5" class="hidden">
+                                    <a href="javascript:void(0)">5</a>
+                                </li>
+                                <li li-tag="6" class="hidden">
+                                    <a href="javascript:void(0)">6</a>
+                                </li>
+                                <li li-tag="7" class="hidden">
+                                    <a href="javascript:void(0)">7</a>
+                                </li>
+                                <li li-tag="8" class="hidden">
+                                    <a href="javascript:void(0)">8</a>
+                                </li>
+                                <li li-tag="9" class="hidden">
+                                    <a href="javascript:void(0)">9</a>
+                                </li>
+
+                                <li li-tag="next" class="disabled">
+                                    <a href="javascript:void(0)">下一页</a>
+                                </li>
+                                <li li-tag="last" class="disabled">
+                                    <a href="javascript:void(0)">尾页</a>
+                                </li>
+                                <li li-tag="input">
+                                    <input type="text">
+                                </li>
+                                <li li-tag="go">
+                                    <a href="javascript:void(0)">GO</a>
+                                </li>
+                            </ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both;"></div><!--用于 100% 宽度，占据全部视口（viewport）的容器-->
+<div class="container-fluid  " style="padding:0px;margin-bottom:0px;" id="647C2029_72C0_3878_88A3_7667034ACF7A">
+    <!--首页底部模块 footer-->
+    <div class="footer max_w1200" du-html="footHtml"><p>Copyright © 2018 GaoHui. All Rights Reserved.</p>
+        <p>河南高辉教育软件科技有限公司 版权所有. 豫ICP备140045678号-1
+        </p></div>
+</div>
+</body><!--消息提示-->
+<div id="commonNotice" class="modal fade bs-example-modal-sm" style="z-index: 1070;top:30%;" tabindex="-1" role="dialog"
+     data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content" style="text-align: center;padding:20px;">
+            <p></p>
+        </div>
+    </div>
+</div><!-- 共用的提示框  -->
+<div id="confirm_popup" class="modal fade bs-example-modal-sm" tabindex="-1" style="z-index: 1060;top:30%;"
+     data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">温馨提示</h4>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center"></p>
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <button type="button" class="btn btn-primary" id="confirm_confirm" style="margin-right:20px;">确认
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="confirm_cancel">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="_loadingLayer"
+     style="position: fixed; top: 0px; right: 0px; bottom: 0px; left: 0px; z-index: 99999; padding-top: 20%; display: none;">
+    <div style="text-align: center;"><img
+            src="data:image/gif;base64,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">
+    </div>
+</div><!--默认大型弹窗-->
+<div id="1670D40E_2B16_F2E2_1657_1E0E46530B13" class="modal fade bs-example-modal-custom-login" tabindex="-1"
+     role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-custom-login" role="document">
+        <div class="modal-content">
+            <!--头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title">欢迎登录</h4>
+            </div>
+
+            <!--内容-->
+            <div class="modal-body"><!--表单容器-->
+                <div class="container-fluid col-xs- col-sm- col-md- col-lg-">
+                    <div class="row">
+                        <form class="form-horizontal" method="" enctype="" id="6F77C457_F486_692A_FE60_79BA7E65F22F">
+
+                            <!--表单交互框容器-->
+                            <div class="col-sm-12" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="C2E06768_DB49_77B7_9BFE_BB71BD80FC41"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title="身份证号"><span style="color:red;display:unset">*</span>身份证号</label>
+                                    <div class="col-sm-12 text-undefined">
+                                        <div div-tag="field"><!--input输入框-->
+
+                                            <div class="input-group form-group-md">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"
+                                                                                     aria-hidden="true"></span></div>
+                                                <input type="text" class="form-control " name="account"
+                                                       id="C2E06768_DB49_77B7_9BFE_BB71BD80FC41" placeholder="身份证号">
+
+
+                                            </div>
+                                        </div>
+                                        <span id="C2E06768_DB49_77B7_9BFE_BB71BD80FC41Tip" class="onCorrect"
+                                              style="opacity: 1; display: inline;">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div><!--表单交互框容器-->
+                            <div class="col-sm-12" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="0E773FA2_2086_26B0_6CC3_5EC535D91CB5"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title="密码"><span style="color:red;display:unset">*</span>密码</label>
+                                    <div class="col-sm-12 text-undefined">
+                                        <div div-tag="field"><!--input输入框-->
+
+                                            <div class="input-group form-group-md">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-lock"
+                                                                                     aria-hidden="true"></span></div>
+                                                <input type="password" class="form-control " name="password"
+                                                       id="0E773FA2_2086_26B0_6CC3_5EC535D91CB5" placeholder="密码">
+
+
+                                            </div>
+                                        </div>
+                                        <span id="0E773FA2_2086_26B0_6CC3_5EC535D91CB5Tip" class="onCorrect"
+                                              style="opacity: 1; display: inline;">&nbsp;</span>
+                                    </div>
+                                </div>
+                            </div><!--表单交互框容器-->
+                            <div class="col-sm-12" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="B349BD4A_CBBC_37CC_1F0E_3EFC63E047FA"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title="验证码"><span style="color:red;display:unset">*</span>验证码</label>
+                                    <div class="col-sm-12 text-undefined">
+                                        <div div-tag="field"><!--input输入框-->
+
+                                            <div class="input-group form-group-md">
+
+                                                <input type="text" class="form-control " name="vcode"
+                                                       id="B349BD4A_CBBC_37CC_1F0E_3EFC63E047FA" placeholder="验证码">
+
+                                                <span class="input-group-btn" span-tag="groupButton"><button
+                                                        class="btn btn-default btn-valid-img " type="button"
+                                                        id="44589216_122D_7D64_232C_F7A7C00D750D">
+	<img id="vcodeImage" src="/train/login/get-login-vcode.gson">
+</button></span>
+                                            </div>
+                                        </div>
+                                        <span id="B349BD4A_CBBC_37CC_1F0E_3EFC63E047FATip"
+                                              style="opacity: 1; display: none;"></span>
+                                    </div>
+                                </div>
+                            </div><!--表单交互框容器-->
+                            <div class="col-sm-6" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="F97D87B7_199B_2961_7212_AA38468DAF01"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title=""><span style="color:red;display:none">*</span></label>
+                                    <div class="col-sm-12 text-undefined">
+                                        <div div-tag="field">
+                                            <div class="marginBottom7" id="F97D87B7_199B_2961_7212_AA38468DAF01-area">
+                                                <label class="checkbox-inline ">
+                                                    <input type="checkbox" name="isRemember" value="1"> 记住密码
+                                                </label>
+                                            </div>
+                                            <!--隐藏输入框，用于验证-->
+                                            <input id="F97D87B7_199B_2961_7212_AA38468DAF01" hidden=""></div>
+                                        <span id="F97D87B7_199B_2961_7212_AA38468DAF01Tip"
+                                              style="display: none;"></span>
+                                    </div>
+                                </div>
+                            </div><!--表单交互框容器-->
+                            <div class="col-sm-6" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="2A41F55D_4C17_54AF_67CE_02414812B1BE"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title=""><span style="color:red;display:none">*</span></label>
+                                    <div class="col-sm-12 text-right">
+                                        <div div-tag="field">
+                                            <div id="2A41F55D_4C17_54AF_67CE_02414812B1BE" class="">
+                                                <div style="display: unset;"
+                                                     id="2A41F55D_4C17_54AF_67CE_02414812B1BE-1">
+                                                    <button class="btn btn-link " type="button"
+                                                            id="3E4BB868_FA23_5065_2FE6_56779FE50DAC">
+                                                        忘记密码?
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span id="2A41F55D_4C17_54AF_67CE_02414812B1BETip"></span>
+                                    </div>
+                                </div>
+                            </div><!--表单交互框容器-->
+                            <div class="col-sm-12" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="8395DB19_242E_CA3C_5AA9_3C19578D9F66"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title=""><span style="color:red;display:none">*</span></label>
+                                    <div class="col-sm-12 text-undefined">
+                                        <div div-tag="field">
+                                            <div id="8395DB19_242E_CA3C_5AA9_3C19578D9F66" class="">
+                                                <div style="display: unset;"
+                                                     id="8395DB19_242E_CA3C_5AA9_3C19578D9F66-1">
+                                                    <button class="btn btn-block btn-primary " type="button"
+                                                            id="E9282261_BE04_55AA_340D_D4A82B13AD53">
+                                                        登录
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span id="8395DB19_242E_CA3C_5AA9_3C19578D9F66Tip"></span>
+                                    </div>
+                                </div>
+                            </div><!--表单交互框容器-->
+                            <div class="col-sm-12" style="display:block">
+                                <div class="form-group mb28">
+                                    <label for="C501D974_5D2B_8854_231E_E058A363307D"
+                                           class="col-sm-0 control-label text-right text-line-ellipsis hidden u-lable"
+                                           title=""><span style="color:red;display:none">*</span></label>
+                                    <div class="col-sm-12 text-center">
+                                        <div div-tag="field">
+                                            <div id="C501D974_5D2B_8854_231E_E058A363307D" class="">
+                                                <div style="display: unset;"
+                                                     id="C501D974_5D2B_8854_231E_E058A363307D-1">
+                                                    <button class="btn btn-link " type="button"
+                                                            id="95E9FE75_F68E_7DD1_B564_C8CCF8866735">
+                                                        没有账号?立即注册
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span id="C501D974_5D2B_8854_231E_E058A363307DTip"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+
+            </div>
+
+            <!--尾部-->
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+</html>
