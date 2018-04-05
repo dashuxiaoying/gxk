@@ -176,10 +176,15 @@ func main() {
 	r.GET("/capture", CaptureHandler)
 
 	r.GET("/", LearnindexHandler)
+	r.GET("/list", ListHandler)
 	r.POST("/learn", LearnHandler)
 	reqChan = make(chan U, 100)
 	go Startlearn()
 	r.Run(":8080")
+}
+func ListHandler(c *gin.Context) {
+	c.HTML(200, "list.html", gin.H{
+	})
 }
 func CaptureHandler(c *gin.Context) {
 	uname := c.Query("uname")
@@ -239,6 +244,7 @@ func LearnHandler(c *gin.Context) {
 	iiresp := A{}
 	json.Unmarshal([]byte(rrr), &iiresp)
 	if iiresp.RespCode == -1 {
+		c.JSON(200, gin.H{"errcode": -1, "msg": "fail"})
 		log.Println("##########账号或密码错误，登录失败##########")
 		return
 	}
@@ -443,14 +449,14 @@ func run(reqcc *request.Request) bool {
 				u.RawQuery = q.Encode()
 
 				wg.Add(1)
-				go worker(reqcc,u, myClassId, myClassCourseId, myClassCourseVideoId, wg)
+				go worker(reqcc, u, myClassId, myClassCourseId, myClassCourseVideoId, wg)
 			}
 		}
 	}
 	return true
 }
 
-func worker(reqcc *request.Request,u *url.URL, myClassId, myClassCourseId, myClassCourseVideoId string, wg *sync.WaitGroup) {
+func worker(reqcc *request.Request, u *url.URL, myClassId, myClassCourseId, myClassCourseVideoId string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for {
 		resp, err := reqcc.Get(u.String())

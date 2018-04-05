@@ -3,16 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>submit</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                var idcode = $("#idcode").val()
+                var password = $("#password").val()
+                var code = $("#code").val()
+                var JSESSIONID = $("#JSESSIONID").val()
+                if (idcode == "") {
+                    alert("身份证不能为空");
+                    return
+                }
+                if (code == "") {
+                    alert("验证码不能为空")
+                    return
+                }
+                $.ajax({
+                    url: "/learn",
+                    type: "POST",
+                    data: {idcode: idcode, password: password, code: code, JSESSIONID: JSESSIONID},
+                    success: function (r) {
+                        if (r.errcode == 0) {
+                            alert("提交成功")
+                        } else {
+                            alert("用户名或密码，验证码错误，提交失败")
+                        }
+                    },
+                    fail: function () {
+                        alert("网络失败")
+                    }
+                })
+                location.reload()
+            })
+        })
+    </script>
 </head>
 <body>
-<form method="post" action="/learn">
-    身份证号：<input type="text" value="" name="idcode"/><br/>
-    密码：<input type="password" value="" name="password" placeholder="默认为身份证后六位"/><br/>
-    输入验证码：<input type="text" name="code"/>
-    验证码：<img src="captcha/image.png"/><br/>
-    <input type="submit" name="submit"/>
-    <input type="hidden" name="JSESSIONID" value="{{ .JSESSIONID}}">
-</form>
+<div class="container">
+    <h1>公需课提交</h1>
+    <form class="form-horizontal" onsubmit="return false;">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="idcode">身份证:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="idcode" placeholder="输入身份证" name="idcode">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="password">密码:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" placeholder="为空时默认后六位" name="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="code">验证码:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="code" placeholder="验证码" name="code">
+                <img src="captcha/image.png"/><br/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" id="JSESSIONID" name="JSESSIONID" value="{{ .JSESSIONID}}">
+                <button id="submit" class="btn btn-default">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>
