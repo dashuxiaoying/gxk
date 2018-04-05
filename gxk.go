@@ -8,14 +8,16 @@ import (
 	"log"
 	"encoding/json"
 	"sync"
+	"github.com/segmentio/go-prompt"
 	"compress/gzip"
 	"os"
 	"io"
 	"strings"
 	"strconv"
-
 	"os/exec"
 	"github.com/gin-gonic/gin"
+	"math/rand"
+	"runtime"
 )
 
 const (
@@ -73,16 +75,11 @@ const (
 )
 
 var (
+	reqcc      *request.Request
 	jobChan    chan url.Values
 	JSESSIONID string
 	wg         *sync.WaitGroup
-	reqChan    chan U
 )
-
-type U struct {
-	Req    *request.Request
-	Idcode string
-}
 
 type B struct {
 	VideoSpeed  float32 `json:"videoSpeed"`
@@ -169,38 +166,26 @@ type Z struct {
 }
 
 func main() {
-	r := gin.Default()
-	r.Static("/static", "./static")
-	r.Static("/captcha", "./captcha")
-	r.LoadHTMLGlob("static/tpl/*")
-	r.GET("/capture", CaptureHandler)
 
-	r.GET("/", LearnindexHandler)
-	r.GET("/list", ListHandler)
-	r.POST("/learn", LearnHandler)
-	reqChan = make(chan U, 100)
-	go Startlearn()
-	r.Run(":8080")
-}
-func ListHandler(c *gin.Context) {
-	c.HTML(200, "list.html", gin.H{
-	})
-}
-func CaptureHandler(c *gin.Context) {
-	uname := c.Query("uname")
-	c.HTML(200, "record.html", gin.H{
-		"uname": uname,
-	})
-}
-func LearnindexHandler(c *gin.Context) {
+	log.Println("服务启动")
+
+	//登录
+	idcode := prompt.StringRequired("输入身份证")
+	password := prompt.String("密码[默认后六位]")
+	idcode = strings.ToUpper(idcode)
+	if len(password) == 0 {
+		log.Println("使用默认密码")
+		password = idcode[12:]
+	}
 	ac := new(http.Client)
-	reqcc := request.NewRequest(ac)
+	reqcc = request.NewRequest(ac)
 	reqcc.Headers = map[string]string{
 		"User-Agent": UserAgents,
 	}
+
 	res, _ := reqcc.Get(vcodeurl)
 	defer res.Body.Close()
-	img, _ := os.Create("./captcha/image.png")
+	img, _ := os.Create("image.png")
 	read, _ := gzip.NewReader(res.Body)
 	io.Copy(img, read)
 	img.Close()
@@ -211,24 +196,11 @@ func LearnindexHandler(c *gin.Context) {
 			break
 		}
 	}
-	log.Println(JSESSIONID)
-	c.HTML(200, "submit.html", gin.H{"JSESSIONID": JSESSIONID})
-}
-
-func LearnHandler(c *gin.Context) {
-
-	idcode := c.PostForm("idcode")
-	password := c.PostForm("password")
-	code := c.PostForm("code")
-	JSESSIONID := c.PostForm("JSESSIONID")
-
-	idcode = strings.ToUpper(idcode)
-	if password == "" {
-		log.Println("使用默认密码")
-		password = idcode[12:]
+	if runtime.GOOS == "darwin" {
+		exec.Command("open", "image.png").Run()
 	}
-	ac := new(http.Client)
-	reqcc := request.NewRequest(ac)
+	code := prompt.String("输入验证码:")
+
 	reqcc.Data = map[string]string{
 		"account":    strings.TrimSpace(idcode),
 		"password":   strings.TrimSpace(password),
@@ -244,7 +216,6 @@ func LearnHandler(c *gin.Context) {
 	iiresp := A{}
 	json.Unmarshal([]byte(rrr), &iiresp)
 	if iiresp.RespCode == -1 {
-		c.JSON(200, gin.H{"errcode": -1, "msg": "fail"})
 		log.Println("##########账号或密码错误，登录失败##########")
 		return
 	}
@@ -252,70 +223,87 @@ func LearnHandler(c *gin.Context) {
 	defer func() {
 		log.Println("idcode:" + idcode)
 	}()
-	u := U{Req: reqcc, Idcode: idcode}
-	reqChan <- u
-	c.JSON(200, gin.H{"errcode": 0, "msg": "success"})
-}
-func Startlearn() {
+
+	randomport := 8000
 	for {
-		select {
-		case requ := <-reqChan:
-			reqcc := requ.Req
-			idcode := requ.Idcode
-			//学习
-			wg = &sync.WaitGroup{}
-			ok := run(reqcc)
-			wg.Wait()
-			log.Println("################all learn finish###################")
-
-			if ok == false {
-				return
-			}
-
-			//考试
-			log.Println("#################start exam###############")
-			time.Sleep(5 * time.Second)
-			r1, _ := reqcc.Get(paperlisturl)
-			r1t, _ := r1.Content()
-			r1s := Q{}
-			json.Unmarshal(r1t, &r1s)
-			papernum := len(r1s.Attribute["data"].List)
-			if papernum == 0 {
-				log.Println("##############没有找到试卷，尝试在补考中寻找################")
-				r1, _ := reqcc.Get(paperrelisturl)
-				r1t, _ := r1.Content()
-				r1s := Q{}
-				json.Unmarshal(r1t, &r1s)
-				papernum = len(r1s.Attribute["data"].List)
-				if papernum == 0 {
-					log.Println("##############补考试卷也没找到，可能已经完成考试，退出################################")
-					return
-				}
-			}
-			myExamId := r1s.Attribute["data"].List[0]["myExamId"].(string)
-			paperId := r1s.Attribute["data"].PaperId
-			examres, _ := reqcc.Get(savemyexamrecordsurl + "&myExamId=" + myExamId)
-			exambytes, _ := examres.Content()
-			exams := Y{}
-			json.Unmarshal(exambytes, &exams)
-			myExamRecordId := exams.Attribute["data"]
-
-			reqcc.Get(starturl + "?paperId=" + paperId + "&myExamRecordId=" + myExamRecordId)
-
-			encodeurl := url.QueryEscape(examparams)
-			examtrueurl := examUrl + "?myExamId=" + myExamId + "&myExamRecordId=" + myExamRecordId + "&answerList=" + encodeurl
-
-			reqcc.Get(examtrueurl)
-			log.Println("################finish exam#####################")
-
-			//capture
-			capture(reqcc, idcode)
+		s1 := rand.NewSource(time.Now().Unix())
+		r11 := rand.New(s1)
+		randomport = r11.Intn(10000)
+		if randomport > 3000 {
+			break
 		}
 	}
+	port := strconv.Itoa(randomport)
+	go CreateServer(port)
+
+	//学习
+	wg = &sync.WaitGroup{}
+	ok := run()
+	wg.Wait()
+	log.Println("################all learn finish###################")
+
+	if ok == false {
+		return
+	}
+
+	//考试
+	log.Println("#################开始考试###############")
+
+	r1, _ := reqcc.Get(paperlisturl)
+	r1t, _ := r1.Content()
+	r1s := Q{}
+	json.Unmarshal(r1t, &r1s)
+	papernum := len(r1s.Attribute["data"].List)
+	if papernum == 0 {
+		log.Println("##############没有找到试卷，尝试在补考中寻找################")
+		r1, _ := reqcc.Get(paperrelisturl)
+		r1t, _ := r1.Content()
+		r1s := Q{}
+		json.Unmarshal(r1t, &r1s)
+		papernum = len(r1s.Attribute["data"].List)
+		if papernum == 0 {
+			log.Println("##############补考试卷也没找到，可能已经完成考试，退出################################")
+			return
+		}
+	}
+	myExamId := r1s.Attribute["data"].List[0]["myExamId"].(string)
+	paperId := r1s.Attribute["data"].PaperId
+	examres, _ := reqcc.Get(savemyexamrecordsurl + "&myExamId=" + myExamId)
+	exambytes, _ := examres.Content()
+	exams := Y{}
+	json.Unmarshal(exambytes, &exams)
+	myExamRecordId := exams.Attribute["data"]
+
+	reqcc.Get(starturl + "?paperId=" + paperId + "&myExamRecordId=" + myExamRecordId)
+
+	encodeurl := url.QueryEscape(examparams)
+	examtrueurl := examUrl + "?myExamId=" + myExamId + "&myExamRecordId=" + myExamRecordId + "&answerList=" + encodeurl
+
+	reqcc.Get(examtrueurl)
+	log.Println("################完成考试#####################")
+
+	//capture
+	capture(idcode, port)
+
+	return
 
 }
 
-func capture(reqcc *request.Request, idcode string) {
+func CreateServer(port string) {
+	r := gin.Default()
+	r.Static("/static", "./static")
+	r.LoadHTMLGlob("static/tpl/*")
+	r.GET("/capture", CaptureHandler)
+	r.Run(":" + port)
+}
+func CaptureHandler(c *gin.Context) {
+	uname := c.Query("uname")
+	c.HTML(200, "record.html", gin.H{
+		"uname": uname,
+	})
+}
+
+func capture(idcode, port string) {
 
 	//get score
 	score := R{}
@@ -341,18 +329,22 @@ func capture(reqcc *request.Request, idcode string) {
 	username := info.Attribute["data"]["realName"].(string)
 	log.Println("realname:" + username)
 
-	cmd := exec.Command("gowitness", "single", "-d", idcode, "-u", "http://127.0.0.1:8080/capture?uname="+username)
+	cmd := exec.Command("gowitness", "single", "-u", "http://127.0.0.1:"+port+"/capture?uname="+username+"&id="+idcode)
 	err := cmd.Run()
 	if err != nil {
 		log.Println("capture image error")
 		return
 	}
 	log.Println("capture image success")
+	//show pic
+	if runtime.GOOS == "darwin" {
+		exec.Command("open", "http-127.0.0.1-"+port+"captureuname-id-"+idcode+".png").Run()
+	}
 	return
 
 }
 
-func run(reqcc *request.Request) bool {
+func run() bool {
 	//课程学习
 	iresp, err := reqcc.Get(infoUrl)
 	if err != nil {
@@ -449,14 +441,14 @@ func run(reqcc *request.Request) bool {
 				u.RawQuery = q.Encode()
 
 				wg.Add(1)
-				go worker(reqcc, u, myClassId, myClassCourseId, myClassCourseVideoId, wg)
+				go worker(u, myClassId, myClassCourseId, myClassCourseVideoId, wg)
 			}
 		}
 	}
 	return true
 }
 
-func worker(reqcc *request.Request, u *url.URL, myClassId, myClassCourseId, myClassCourseVideoId string, wg *sync.WaitGroup) {
+func worker(u *url.URL, myClassId, myClassCourseId, myClassCourseVideoId string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for {
 		resp, err := reqcc.Get(u.String())
@@ -469,9 +461,9 @@ func worker(reqcc *request.Request, u *url.URL, myClassId, myClassCourseId, myCl
 			continue
 			return
 		}
+		log.Println(res)
 		r := A{}
 		json.Unmarshal([]byte(res), &r)
-		log.Println(res)
 		if r.Attribute.CourseSpeed == 100.0 {
 			reqcc.Get(getprocess + "?myClassId=" + myClassId)
 			reqcc.Data = map[string]string{
@@ -493,9 +485,9 @@ func worker(reqcc *request.Request, u *url.URL, myClassId, myClassCourseId, myCl
 		if err != nil {
 			continue
 		}
+		log.Println(res)
 		dd := P{}
 		json.Unmarshal([]byte(res), &dd)
-		log.Println(res)
 		if dd.Attribute["data"] == 100.0 {
 			log.Println("#################learn finish#######################")
 			break
