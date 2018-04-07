@@ -2,6 +2,6 @@
 *.exe
 *_linux_amd64
 *_darwin_amd64
-*.png
+image.png
 *.db
 *.png
