@@ -22,23 +22,23 @@ import (
 
 const (
 	UserAgents           = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36"
-	infoUrl              = "http://hnzj.user.ghlearning.com/train/cms/study/find-my-study-info.gson"
-	classUrl             = "http://hnzj.user.ghlearning.com/train/class/my-class.gson?myClassId="
-	courseurl            = "http://hnzj.user.ghlearning.com/train/cms/my-video/count-timing-nosign.gson"
-	getprocess           = "http://hnzj.user.ghlearning.com/train/class/calculate-my-class-learn-speed.gson"
-	updateurl            = "http://hnzj.user.ghlearning.com/train/class/update-my-class.gson"
-	vcodeurl             = "http://hnzj.user.ghlearning.com/train/login/get-login-vcode.gson"
-	loginurl             = "http://hnzj.user.ghlearning.com/train/login/login.gson"
-	zyurl                = "http://hnzj.user.ghlearning.com/train/cms/order/is-free-order.gson"
+	infoUrl              = "http://116.255.220.66:9001/train/cms/study/find-my-study-info.gson"
+	classUrl             = "http://116.255.220.66:9001/train/class/my-class.gson?myClassId="
+	courseurl            = "http://116.255.220.66:9001/train/cms/my-video/count-timing-nosign.gson"
+	getprocess           = "http://116.255.220.66:9001/train/class/calculate-my-class-learn-speed.gson"
+	updateurl            = "http://116.255.220.66:9001/train/class/update-my-class.gson"
+	vcodeurl             = "http://116.255.220.66:9001/train/login/get-login-vcode.gson"
+	loginurl             = "http://116.255.220.66:9001/train/login/login.gson"
+	zyurl                = "http://116.255.220.66:9001/train/cms/order/is-free-order.gson"
 	zyclassId            = "68d0baea-01f2-49ac-b88a-f53b379d0d95"
 	mainclassId          = "c7821735-63ab-4df8-9456-6d1c559ca8b3"
-	savemyexamrecordsurl = "http://hnzj.user.ghlearning.com/train/cms/paper/save-my-exam-record.gson?isMakeUp=0&examType=1"
-	paperlisturl         = "http://hnzj.user.ghlearning.com/train/cms/paper/find-paper-list.gson?pageNo=1&pageSize=10&cmsType=0"
-	paperrelisturl       = "http://hnzj.user.ghlearning.com/train/cms/paper/find-paper-list.gson?pageNo=1&pageSize=10&cmsType=2"
-	examUrl              = "http://hnzj.user.ghlearning.com/train/cms/paper/submit-paper.gson"
-	starturl             = "http://hnzj.user.ghlearning.com/train/cms/paper/start-do-paper-or-test.gson"
-	personalinfourl      = "http://hnzj.user.ghlearning.com/train/account/get-personal-info.gson"
-	scorelist            = "http://hnzj.user.ghlearning.com/train/cms/record/find-my-record-list.gson?pageSize=10&pageNo=1"
+	savemyexamrecordsurl = "http://116.255.220.66:9001/train/cms/paper/save-my-exam-record.gson?isMakeUp=0&examType=1"
+	paperlisturl         = "http://116.255.220.66:9001/train/cms/paper/find-paper-list.gson?pageNo=1&pageSize=10&cmsType=0"
+	paperrelisturl       = "http://116.255.220.66:9001/train/cms/paper/find-paper-list.gson?pageNo=1&pageSize=10&cmsType=2"
+	examUrl              = "http://116.255.220.66:9001/train/cms/paper/submit-paper.gson"
+	starturl             = "http://116.255.220.66:9001/train/cms/paper/start-do-paper-or-test.gson"
+	personalinfourl      = "http://116.255.220.66:9001/train/account/get-personal-info.gson"
+	scorelist            = "http://116.255.220.66:9001/train/cms/record/find-my-record-list.gson?pageSize=10&pageNo=1"
 	examparams           = `
 	[{"answers":[{"optionId": "e7b31dd5-49eb-4d7e-be4c-a84fb6b0b973"}], "paperQuestionId": "2a26985b-b511-4a29-ae8c-fada8a6c2c93"},
 {"answers":[{"optionId": "d9847a74-e411-49ed-896e-ea1a5fd7a245"}], "paperQuestionId": "9c01d73f-e6fd-4ab8-a9fc-179f3ad99cac"},
@@ -60,12 +60,12 @@ const (
 {"answers":[{"optionId": "99cb45c3-24a8-4d1e-bdfb-dc4b313a32f2"}], "paperQuestionId": "13542050-b1a1-4f58-ae64-adf51b689527"},
 {"answers":[{"optionId": "dc537ad0-e9b3-4d3d-a045-fbdaeb1ce7f1"}], "paperQuestionId": "e72de0af-4405-4928-9b87-6b95c8678b84"},
 {"answers":[{"optionId": "49d207c3-c4f2-4abd-9e6e-f0e6f2113a94"}], "paperQuestionId": "1ee2a444-c462-43b9-9328-295197744703"},
-{"answers":[{"optionId": "d9c84411-4e9b-4a12-b6d9-6c90c68b5680"}, {"optionId": "298892b6-c247-4f5f-936a-e1f9f5a7cdea"}, {"optionId": "c0fec689-f805-4b6c-b750-daa8f61f629b"}], "paperQuestionId": "c2df87fc-9d2d-4251-8793-db9aef00dce5"},
+{"answers":[{"optionId": "d9c84411-4e9b-4a12-b6d9-6c90c68b5680"},  {"optionId": "c0fec689-f805-4b6c-b750-daa8f61f629b"}], "paperQuestionId": "c2df87fc-9d2d-4251-8793-db9aef00dce5"},
 {"answers":[{"optionId": "0a178c1b-c546-42e3-b405-5450bc7038c5"}, {"optionId": "6bbf0bdc-5cf6-4e15-8b2f-33f7e107a519"}, {"optionId": "1acaafbb-7aa9-4eec-acb0-7b1c10dce3bc"}], "paperQuestionId": "ad042c9a-a4fe-4ef3-8cfc-600f0686b20d"},
 {"answers":[{"optionId": "e92a2838-11f0-4fff-9591-290b712fef0a"}, {"optionId": "9c619065-02a4-4e29-b0d9-7299d22c48ab"}, {"optionId": "5576a739-c48f-4416-abc2-48f4c62edf88"}, {"optionId": "cca2c8f5-4bbb-4a1d-b491-1ca897ee3986"}], "paperQuestionId": "843243e1-2c39-4674-9e3b-0369b40bdff0"},
 {"answers":[{"optionId": "6a485e23-f542-411f-84ed-486e96ea1247"}, {"optionId": "ceec5215-2f46-4775-ae3b-de730652f8ad"}], "paperQuestionId": "606d2be2-0c99-4440-8a0e-26e55a80b745"},
 {"answers":[{"optionId": "85e58505-235d-40bd-893d-55252c8b2ff9"}, {"optionId": "5109db23-d94f-4a5e-b9fb-2230625305d3"}, {"optionId": "32df67af-3c17-4ccc-94e8-ff9228e051be"}, {"optionId": "39c1840c-9260-4884-befa-1966af05c446"}], "paperQuestionId": "e91739da-cb83-497c-8097-4aaf3fc0739a"},
-{"answers":[{"optionId": "b223391e-f739-4198-bceb-629051f15162"}, {"optionId": "d920c21c-d7fa-4d1d-b403-90b1008cd243"}, {"optionId": "7a51741c-6dd9-4ea4-b286-4962f0faaccf"}], "paperQuestionId": "af93f72a-4bf5-4993-ab0c-889c53bdb0e0"},
+{"answers":[{"optionId": "b223391e-f739-4198-bceb-629051f15162"},  {"optionId": "7a51741c-6dd9-4ea4-b286-4962f0faaccf"}], "paperQuestionId": "af93f72a-4bf5-4993-ab0c-889c53bdb0e0"},
 {"answers":[{"optionId": "6b57462c-9cd7-4f21-a477-751dd193e9c5"}, {"optionId": "955a5353-73f8-4b29-9963-57b689a4da53"}], "paperQuestionId": "59513f8b-bfff-412d-a8aa-52ea62543dd4"},
 {"answers":[{"optionId": "17960476-f0e4-4bfd-9e26-63906b3c7782"}, {"optionId": "429b5e2d-a669-4df9-8dd4-9a6de141c58e"}, {"optionId": "36f87e86-6068-4fe5-af3a-62d2763f9607"}], "paperQuestionId": "b9f95e9a-ce85-40d7-a069-dc754504a847"},
 {"answers":[{"optionId": "81dc1fc3-f51e-469b-935a-85e5a785ad5e"}, {"optionId": "335e3d40-79b2-4ddd-ad56-694007117b25"}, {"optionId": "f17446d4-606d-4b88-84b8-29ff19e8b11e"}], "paperQuestionId": "0ab3161d-747d-4e43-a88d-b9a66c9ad7ce"},
